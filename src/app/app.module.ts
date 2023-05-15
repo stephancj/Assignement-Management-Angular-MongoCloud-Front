@@ -10,24 +10,30 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatListModule } from '@angular/material/list';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { RenduDirective } from './shared/rendu.directive';
 import { FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
+import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AssignmentsComponent,
-    RenduDirective
+    RenduDirective,
+    AssignmentDetailComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule, MatNativeDateModule,
     MatButtonModule, MatIconModule, MatDividerModule,
-    MatInputModule, MatFormFieldModule, MatDatepickerModule
+    MatInputModule, MatFormFieldModule, MatDatepickerModule,
+    MatListModule, MatCardModule, MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

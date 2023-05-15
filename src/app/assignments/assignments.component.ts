@@ -10,6 +10,9 @@ export class AssignmentsComponent implements OnInit{
   titre="Liste des devoirs à rendre";
   c="orange";
   ajoutActive=false;
+  // assignment cliqué
+  assignmentSelectionne!:Assignment;
+
   // champs du formulaire
   nomDevoir="";
   dateDeRendu!:Date;
@@ -51,5 +54,10 @@ export class AssignmentsComponent implements OnInit{
     nouvelAssignment.rendu = false;
 
     this.assignments.push(nouvelAssignment);
+  }
+
+  onAssignmentClique(assignment:Assignment) {
+    console.log("Assignment cliqué : " + assignment.nom);
+    this.assignmentSelectionne = assignment;
   }
 }
