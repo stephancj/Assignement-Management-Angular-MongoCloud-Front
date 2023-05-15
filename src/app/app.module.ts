@@ -19,13 +19,15 @@ import { RenduDirective } from './shared/rendu.directive';
 import { FormsModule } from '@angular/forms';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
+import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AssignmentsComponent,
     RenduDirective,
-    AssignmentDetailComponent
+    AssignmentDetailComponent,
+    AddAssignmentComponent
   ],
   imports: [
     BrowserModule,

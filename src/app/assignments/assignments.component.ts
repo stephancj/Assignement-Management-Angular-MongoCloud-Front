@@ -10,13 +10,11 @@ export class AssignmentsComponent implements OnInit{
   titre="Liste des devoirs à rendre";
   c="orange";
   ajoutActive=false;
+  formVisible=false;
   // assignment cliqué
   assignmentSelectionne!:Assignment;
 
-  // champs du formulaire
-  nomDevoir="";
-  dateDeRendu!:Date;
-
+  
   // tableau de devoirs à rendre
   assignments:Assignment[] = [
     {
@@ -43,21 +41,22 @@ export class AssignmentsComponent implements OnInit{
     }, 4000);
   }
 
-  onSubmit(event: any) {
-    // On vérifie que les champs ne sont pas vides
-    if(this.nomDevoir === "") return;
-    if(this.dateDeRendu === undefined) return;
-
-    let nouvelAssignment = new Assignment();
-    nouvelAssignment.nom = this.nomDevoir;
-    nouvelAssignment.dateDeRendu = this.dateDeRendu;
-    nouvelAssignment.rendu = false;
-
-    this.assignments.push(nouvelAssignment);
-  }
-
+  
   onAssignmentClique(assignment:Assignment) {
     console.log("Assignment cliqué : " + assignment.nom);
     this.assignmentSelectionne = assignment;
+  }
+
+  onAddAssignmentBtnClick() {
+    this.formVisible = true;
+  }
+
+  onNouvelAssignment(a:Assignment) {
+    // on ajoute l'assignment reçu du composant
+    // add-assignment sous forme d'évent
+    this.assignments.push(a);
+
+    // et on re-affiche la liste (on cache le formulaire)
+    this.formVisible = false;
   }
 }
