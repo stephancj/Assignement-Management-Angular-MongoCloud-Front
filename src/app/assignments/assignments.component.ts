@@ -9,7 +9,6 @@ import { AssignmentsService } from '../shared/assignments.service';
 })
 export class AssignmentsComponent implements OnInit{
   titre="Liste des devoirs à rendre";
-  c="orange";
   formVisible=false;
   // les données à afficher
   assignments:Assignment[] = [];
@@ -53,15 +52,5 @@ export class AssignmentsComponent implements OnInit{
       // et on re-affiche la liste (on cache le formulaire)
       this.formVisible = false;
     });
-
-    
-  }
-
-  onDeleteAssignment() {
-    // pour supprimer on passe à la méthode splice
-    // l'index de l'assignment à supprimer et 
-    // le nombre d'éléments à supprimer (ici 1)
-    const index = this.assignments.indexOf(this.assignmentSelectionne);
-    this.assignments.splice(index, 1);
   }
 }
