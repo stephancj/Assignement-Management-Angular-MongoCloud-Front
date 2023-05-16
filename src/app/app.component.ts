@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { AssignmentsService } from './shared/assignments.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,9 @@ export class AppComponent {
   nom:string = "";
   currentRoute:string = "";
 
-  constructor(private authService:AuthService, private router:Router) {
+  constructor(private authService:AuthService, 
+              private router:Router,
+              private assigmmentsService:AssignmentsService) {
     console.log(router.url);
 
     router.events.subscribe(event => {
@@ -44,5 +47,16 @@ export class AppComponent {
       this.nom = "Michel Buffa";
     }
     return this.authService.loggedIn;
+  }
+
+  creerDonneesDeTest() {
+    this.assigmmentsService.peuplerBDavecForkJoin()
+    .subscribe(() => {
+      console.log("Opération terminée, les 1000 données ont été insérées")
+
+      // on refresh la page pour que la liste apparaisse
+      // plusieurs manières de faire....
+      window.location.reload();
+    });
   }
 }

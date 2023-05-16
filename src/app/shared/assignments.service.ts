@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Assignment } from '../assignments/assignment.model';
-import { Observable, of } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of, tap } from 'rxjs';
 import { LoggingService } from './logging.service';
 import { HttpClient } from '@angular/common/http';
+import { bdInitialAssignments } from './data';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,12 @@ assignments:Assignment[] = []
 
     uri_api = 'http://localhost:8010/api/assignments';
 
-  getAssignments():Observable<Assignment[]> {
+  getAssignments(page:number, limit:number):Observable<any> {
     // normalement on doit envoyer une requête HTTP
     // sur un web service, et ça peut prendre du temps
     // On a donc besoin "d'attendre que les données arrivent".
     // Angular utilise pour cela la notion d'Observable
-    return this.http.get<Assignment[]>(this.uri_api);
+    return this.http.get<Assignment[]>(this.uri_api + "?page=" + page + "&limit=" + limit);
     
     // of() permet de créer un Observable qui va
     // contenir les données du tableau assignments
@@ -29,7 +30,27 @@ assignments:Assignment[] = []
 
   getAssignment(id:number):Observable<Assignment|undefined> {
     // Plus tard on utilisera un Web Service et une BD
-    return this.http.get<Assignment|undefined>(`${this.uri_api}/${id}`);
+    return this.http.get<Assignment|undefined>(`${this.uri_api}/${id}`)
+   
+    .pipe(
+      map(a => {
+        if(a) {
+          a.nom += " MAP MAP MAP";
+        }
+        return a;
+      }),
+      tap(a => {
+        if(a)
+          console.log("ICI DANS LE TAP " + a.nom)
+      }),
+      map(a => {
+        if(a) {
+          a.nom += " TOTOTOTO";
+        }
+        return a;
+      }),
+      catchError(this.handleError<Assignment>("Erreur dans le traitement de assignment avec id = " + id))
+    )
     
     // On va chercher dans le tableau des assignments
     // l'assignment dont l'id est celui passé en paramètre
@@ -39,14 +60,24 @@ assignments:Assignment[] = []
     //return of(assignment);
   }
 
+  private handleError<T>(operation: any, result?: T) {
+    return (error: any): Observable<T> => {
+      console.log(error); // pour afficher dans la console
+      console.log(operation + ' a échoué ' + error.message);
+ 
+      return of(result as T);
+    }
+ };
+ 
   addAssignment(assignment:Assignment):Observable<any> {
+    this.loggingService.log(assignment.nom, 'ajouté');
+
     // plus tard on utilisera un web service pour l'ajout dans une vraie BD
     return this.http.post<Assignment>(this.uri_api, assignment);
     // on ajoute le devoir au tableau des devoirs
     //this.assignments.push(assignment);
     // on retourne un message de succès à travers
     // un Observable
-    //this.loggingService.log(assignment.nom, 'ajouté');
     //return of(`Assignment ${assignment.nom} ajouté avec succès`);
   }
 
@@ -77,4 +108,38 @@ assignments:Assignment[] = []
     return of('Assignment supprimé avec succès')
     */
   }
+
+  peuplerBD() {
+    bdInitialAssignments.forEach(a => {
+      const newAssignment = new Assignment();
+      newAssignment.id = a.id;
+      newAssignment.nom = a.nom;
+      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      newAssignment.rendu = a.rendu;
+
+      this.addAssignment(newAssignment)
+      .subscribe((reponse) => {
+        console.log(reponse.message);
+      })
+    })
+  }
+
+  // cette version retourne un Observable. Elle permet de savoir quand
+  // l'opération est terminée (l'ajout des 1000 assignments)
+  peuplerBDavecForkJoin():Observable<any> {
+    // tableau d'observables (les valeurs de retour de addAssignment)
+    let appelsVersAddAssignment:Observable<any>[] = [];
+ 
+    bdInitialAssignments.forEach(a => {
+      const nouvelAssignment = new Assignment();
+      nouvelAssignment.nom = a.nom;
+      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
+      nouvelAssignment.rendu = a.rendu;
+ 
+      appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment))
+    });
+ 
+    return forkJoin(appelsVersAddAssignment);
+  }
+ 
 }
