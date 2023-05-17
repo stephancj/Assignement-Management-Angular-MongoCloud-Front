@@ -15,6 +15,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AssignmentsComponent } from './assignments/assignments.component';
 import { RenduDirective } from './shared/rendu.directive';
@@ -74,7 +76,8 @@ const routes: Routes = [
     MatNativeDateModule, ScrollingModule,
     MatButtonModule, MatIconModule, MatDividerModule,
     MatInputModule, MatFormFieldModule, MatDatepickerModule,
-    MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule
+    MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule,
+    MatTableModule, MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

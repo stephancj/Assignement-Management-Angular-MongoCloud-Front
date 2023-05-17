@@ -13,6 +13,9 @@ export class AssignmentsComponent implements OnInit {
   titre="Liste des devoirs à rendre";
   // les données à afficher
   assignments:Assignment[] = [];
+  // Pour la data table
+  displayedColumns: string[] = ['id', 'nom', 'dateDeRendu', 'rendu'];
+
   // propriétés pour la pagination
   page: number=1;
   limit: number=10;
@@ -134,6 +137,15 @@ export class AssignmentsComponent implements OnInit {
   }
   dernierePage() {
     this.page = this.totalPages;
+    this.getAssignments();
+  }
+
+  // Pour mat-paginator
+  handlePage(event: any) {
+    console.log(event);
+   
+    this.page = event.pageIndex;
+    this.limit = event.pageSize;
     this.getAssignments();
   }
 }
