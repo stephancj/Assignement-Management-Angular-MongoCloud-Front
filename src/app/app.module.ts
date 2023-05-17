@@ -23,6 +23,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { AssignmentDetailComponent } from './assignments/assignment-detail/assignment-detail.component';
 import { AddAssignmentComponent } from './assignments/add-assignment/add-assignment.component';
 import { Routes, RouterModule } from '@angular/router';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 import { EditAssignmentComponent } from './assignments/edit-assignment/edit-assignment.component';
 import { authGuard } from './shared/auth.guard';
 import { LoginComponent } from './login/login.component';  
@@ -69,7 +71,7 @@ const routes: Routes = [
     BrowserAnimationsModule,
     FormsModule, RouterModule.forRoot(routes),
     HttpClientModule,
-    MatNativeDateModule,
+    MatNativeDateModule, ScrollingModule,
     MatButtonModule, MatIconModule, MatDividerModule,
     MatInputModule, MatFormFieldModule, MatDatepickerModule,
     MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule
