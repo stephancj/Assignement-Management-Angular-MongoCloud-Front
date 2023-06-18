@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Assignment } from '../assignments/assignment.model';
-import { Observable, catchError, forkJoin, map, of, tap } from 'rxjs';
-import { LoggingService } from './logging.service';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable, catchError, forkJoin, map, of, tap } from 'rxjs';
+import { Assignment } from '../assignments/assignment.model';
 import { bdInitialAssignments } from './data';
+import { LoggingService } from './logging.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +14,8 @@ assignments:Assignment[] = []
   constructor(private loggingService:LoggingService,
     private http:HttpClient) { }
 
-    //uri_api = 'http://localhost:8010/api/assignments';
-    uri_api = 'https://mbds-madagascar-2022-2023-back-end.onrender.com/api/assignments';
+    uri_api = 'http://localhost:8010/api/assignments';
+    // uri_api = 'https://mbds-madagascar-2022-2023-back-end.onrender.com/api/assignments';
 
   getAssignments(page:number, limit:number):Observable<any> {
     // normalement on doit envoyer une requête HTTP

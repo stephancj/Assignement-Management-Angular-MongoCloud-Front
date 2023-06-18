@@ -1,1 +1,23 @@
-<p>ICI FORMULAIRE DE CONNEXION</p>
+<!-- login.component.html -->
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <form>
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" name="email" required>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput type="password" name="password" required>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button color="primary" (click)="login()">Login</button>
+        </form>
+    </mat-card-content>
+</mat-card>
+  
