@@ -1,0 +1,45 @@
+<!-- main-layout.component.html -->
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="toggleSideNav()" aria-label="Example icon-button with menu icon">
+            <mat-icon>menu</mat-icon>
+        </button>
+      <span>My App</span>
+      <span class="example-spacer"></span>
+      <!-- logout button with icon-->
+        <button mat-icon-button aria-label="Example icon-button with menu icon">
+            <mat-icon>logout</mat-icon>
+        </button>
+    </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-container">
+<mat-sidenav #sidenav mode="side" [(opened)]="isSideNavOpen">
+    <mat-nav-list>
+    <a mat-list-item (click)="selectItem('Assignments')">Assignments</a>
+    <a mat-list-item (click)="selectItem('Subjects')">Subjects</a>
+    <a mat-list-item (click)="selectItem('Students')">Students</a>
+    <a mat-list-item (click)="selectItem('Teachers')">Teachers</a>
+    </mat-nav-list>
+</mat-sidenav>
+    <mat-sidenav-content>
+        <ng-container [ngSwitch]="selectedItem">
+            <ng-container *ngSwitchCase="'Assignments'">
+                <app-assignments></app-assignments>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Subjects'">
+                <app-subjects></app-subjects>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Students'">
+                <app-students></app-students>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'Teachers'">
+                <app-teachers></app-teachers>
+            </ng-container>
+        <!-- Add more ng-container blocks for additional items -->
+        </ng-container>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
