@@ -57,7 +57,7 @@
                 <button mat-button>
                   <mat-icon color="primary">edit-icon</mat-icon>
                 </button>
-                <button mat-button>
+                <button mat-button (click)="deleteAssignment(assignment)">
                   <mat-icon color="accent">delete-icon</mat-icon>
                 </button>
               </mat-card-actions>
@@ -103,7 +103,7 @@
               <button mat-button>
                 <mat-icon color="primary">edit-icon</mat-icon>
               </button>
-              <button mat-button>
+              <button mat-button (click)="deleteAssignment(assignment)">
                 <mat-icon color="accent">delete-icon</mat-icon>
               </button>
             </mat-card-actions>

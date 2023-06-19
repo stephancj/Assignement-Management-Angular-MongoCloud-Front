@@ -1,9 +1,12 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Component, EventEmitter, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, map, pairwise, tap } from 'rxjs';
 import { AssignmentsService } from '../shared/assignments.service';
 import { Assignment } from './assignment.model';
+
 
 
 @Component({
@@ -37,8 +40,9 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
 
   constructor(private assignmentsService:AssignmentsService,
-              private ngZone: NgZone) {    
+              private ngZone: NgZone, public dialog: MatDialog, private snackBar : MatSnackBar) {
   }
+  
   
   onAddClick() {
     this.addClicked.emit('Add assignment');
@@ -177,6 +181,50 @@ export class AssignmentsComponent implements OnInit {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+      this.changeRendu(event.container.data[event.currentIndex]);
     }
+  }
+
+  //delete assignment
+  deleteAssignment(assignment: Assignment) {
+    this.assignmentsService.deleteAssignment(assignment).subscribe(
+      () => {
+        console.log();
+        this.getAssignments();
+        this.snackBar.open('Assignment deleted successfully!', 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+        });
+      },
+      (error) => {
+        console.log(error);
+        this.snackBar.open('Error deleting assignment!', 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+        });
+      }
+    );
+  }
+
+  changeRendu(assignment: Assignment) {
+    assignment.rendu = !assignment.rendu;
+    this.assignmentsService.updateAssignment(assignment).subscribe(
+      () => {
+        console.log();
+        this.getAssignments();
+        this.snackBar.open(`The ${assignment.nom} assigment is updated successfully!`, 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+        });
+      },
+      (error) => {
+        console.log(error);
+        this.snackBar.open(`Error updating the ${assignment.nom} assignment!`, 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+        });
+      }
+    );
+    this.getAssignments();
   }
 }

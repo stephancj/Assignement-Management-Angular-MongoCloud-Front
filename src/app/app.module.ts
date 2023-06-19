@@ -12,6 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -66,7 +67,7 @@ import { TeachersComponent } from './teachers/teachers.component';
     MatInputModule, MatFormFieldModule, MatDatepickerModule,
     MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule,
     MatTableModule, MatPaginatorModule, MatToolbarModule, MatSidenavModule, MatStepperModule, ReactiveFormsModule,
-    MatSnackBarModule, DragDropModule, MatGridListModule, MatSliderModule
+    MatSnackBarModule, DragDropModule, MatGridListModule, MatSliderModule, MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
