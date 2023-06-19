@@ -5,8 +5,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { filter, map, pairwise, tap } from 'rxjs';
 import { AssignmentsService } from '../shared/assignments.service';
+import { DialogService } from '../shared/dialog.service';
+import { AddAssignmentComponent } from './add-assignment/add-assignment.component';
 import { Assignment } from './assignment.model';
-
+import { EditAssignmentComponent } from './edit-assignment/edit-assignment.component';
 
 
 @Component({
@@ -40,8 +42,9 @@ export class AssignmentsComponent implements OnInit {
   @ViewChild('scroller') scroller!: CdkVirtualScrollViewport;
 
   constructor(private assignmentsService:AssignmentsService,
-              private ngZone: NgZone, public dialog: MatDialog, private snackBar : MatSnackBar) {
-  }
+              private ngZone: NgZone, public dialog: MatDialog, 
+              private snackBar : MatSnackBar, 
+              private dialogService: DialogService) {}
   
   
   onAddClick() {
@@ -50,10 +53,6 @@ export class AssignmentsComponent implements OnInit {
   
   ngOnInit(): void {
     console.log("OnInit Composant instancié et juste avant le rendu HTML (le composant est visible dans la page HTML)");
-    // exercice : regarder si il existe des query params
-    // page et limit, récupérer leur valeurs si elles existent
-    // et les passer à la méthode getAssignments
-    // TODO
 
     this.getAssignments();
   }
@@ -191,14 +190,14 @@ export class AssignmentsComponent implements OnInit {
       () => {
         console.log();
         this.getAssignments();
-        this.snackBar.open('Assignment deleted successfully!', 'Close', {
+        this.snackBar.open(`The ${assignment.nom} is successfully deleted!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
         });
       },
       (error) => {
         console.log(error);
-        this.snackBar.open('Error deleting assignment!', 'Close', {
+        this.snackBar.open(`Error deleting ${assignment.nom} assignment!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
         });
@@ -215,6 +214,7 @@ export class AssignmentsComponent implements OnInit {
         this.snackBar.open(`The ${assignment.nom} assigment is updated successfully!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
+          panelClass: ['mat-toolbar', 'mat-warn']
         });
       },
       (error) => {
@@ -222,9 +222,46 @@ export class AssignmentsComponent implements OnInit {
         this.snackBar.open(`Error updating the ${assignment.nom} assignment!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
+          panelClass : ['mat-toolbar', 'mat-warn']
         });
       }
     );
     this.getAssignments();
+  }
+
+  editAssignment(assignment: Assignment) {
+    const dialogRef = this.dialog.open(EditAssignmentComponent, {
+      width: '500px',
+      data: assignment
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getAssignments();
+    });
+  }
+
+  addAssignment(){
+    const dialogRef = this.dialog.open(AddAssignmentComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.getAssignments();
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  convertDateFormat(dateString: string) {
+    const date = new Date(dateString);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1; // Months are zero-based
+    const year = date.getUTCFullYear();
+  
+    const formattedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+  
+    return formattedDate;
   }
 }

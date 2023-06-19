@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Teacher } from '../teachers/teacher.model';
 import { LoggingService } from './logging.service';
 
@@ -20,28 +20,7 @@ assignments:Teacher[] = []
   }
 
   getTeacher(id:number):Observable<Teacher|undefined> {
-    // Plus tard on utilisera un Web Service et une BD
     return this.http.get<Teacher|undefined>(`${this.uri_api}/${id}`)
-   
-    .pipe(
-      map(a => {
-        if(a) {
-          a.name += " MAP MAP MAP";
-        }
-        return a;
-      }),
-      tap(a => {
-        if(a)
-          console.log("ICI DANS LE TAP " + a.name)
-      }),
-      map(a => {
-        if(a) {
-          a.name += " TOTOTOTO";
-        }
-        return a;
-      }),
-      catchError(this.handleError<Teacher>("Erreur dans le traitement de teacher avec id = " + id))
-    )
   }
 
   private handleError<T>(operation: any, result?: T) {

@@ -1,7 +1,7 @@
 .form {
     display: flex;
     flex-direction: column;
-    margin:5px;
+    width: 100%;
 }
 
 .mat-stepper-vertical {
@@ -20,4 +20,17 @@
   .success-snackbar {
     background-color: #03a87f; /* Replace with your desired background color */
     color: #ffffff; /* Replace with your desired text color */
+  }
+
+  .add-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+  }
+
+  .btn{
+    margin-right: 30px;
+    margin-left: 30px;
   }

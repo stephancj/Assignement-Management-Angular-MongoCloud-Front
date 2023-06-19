@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
 import { LoggingService } from './logging.service';
 
@@ -31,26 +31,6 @@ assignments:Assignment[] = []
   getAssignment(id:number):Observable<Assignment|undefined> {
     // Plus tard on utilisera un Web Service et une BD
     return this.http.get<Assignment|undefined>(`${this.uri_api}/${id}`)
-   
-    .pipe(
-      map(a => {
-        if(a) {
-          a.nom += " MAP MAP MAP";
-        }
-        return a;
-      }),
-      tap(a => {
-        if(a)
-          console.log("ICI DANS LE TAP " + a.nom)
-      }),
-      map(a => {
-        if(a) {
-          a.nom += " TOTOTOTO";
-        }
-        return a;
-      }),
-      catchError(this.handleError<Assignment>("Erreur dans le traitement de assignment avec id = " + id))
-    )
     
     // On va chercher dans le tableau des assignments
     // l'assignment dont l'id est celui passé en paramètre
@@ -96,16 +76,5 @@ assignments:Assignment[] = []
 
   deleteAssignment(assignment:Assignment):Observable<any> {
     return this.http.delete(this.uri_api + "/" + assignment._id)
-      // pour supprimer on passe à la méthode splice
-    // l'index de l'assignment à supprimer et 
-    // le nombre d'éléments à supprimer (ici 1)
-    /*
-    const index = this.assignments.indexOf(assignment);
-    this.assignments.splice(index, 1);
-
-    this.loggingService.log(assignment.nom, 'supprimé');
-
-    return of('Assignment supprimé avec succès')
-    */
   }
 }

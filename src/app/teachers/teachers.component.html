@@ -7,18 +7,18 @@
        /> {{limit}}
 </p>
 <mat-divider></mat-divider>
-<mat-grid-list cols="3" rowHeight="150">
+<mat-grid-list cols="4" rowHeight="200">
     <mat-grid-tile *ngFor="let item of teachers">
-        <mat-card>
-        <mat-card-header>
-            <div mat-card-avatar>
-                <img mat-card-avatar [src]="item.picture" alt="Card Image">
-                </div>
-            <mat-card-title>{{ item.name }}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            Email : {{ item.email }}
-        </mat-card-content>
+        <mat-card class="teacher-card">
+            <mat-card-header>
+                <div mat-card-avatar>
+                    <img mat-card-avatar [src]="item.picture" alt="Card Image">
+                    </div>
+                <mat-card-title>{{ item.name }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                Email : {{ item.email }}
+            </mat-card-content>
         </mat-card>
     </mat-grid-tile>
 </mat-grid-list>

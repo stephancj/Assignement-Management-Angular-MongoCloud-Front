@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SubjectsService } from '../shared/subjects.service';
+import { TeachersService } from '../shared/teachers.service';
 import { Subject } from './Subject.model';
 
 
@@ -9,7 +10,7 @@ import { Subject } from './Subject.model';
   styleUrls: ['./subjects.component.css']
 })
 export class SubjectsComponent {
-  constructor(private subjectsService:SubjectsService) { }
+  constructor(private subjectsService:SubjectsService, private teachersService: TeachersService) { }
 
     // les données à afficher
     subjects:Subject[] = [];
@@ -27,7 +28,6 @@ export class SubjectsComponent {
     nextPage: number = 0;
 
   ngOnInit(): void {
-    console.log("OnInit Composant instancié et juste avant le rendu HTML (le composant est visible dans la page HTML)");
     this.getSubjects();
   }
 

@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { DialogService } from 'src/app/shared/dialog.service';
 import { Assignment } from '../assignment.model';
+
 
 
 
@@ -22,7 +25,16 @@ export class AddAssignmentComponent {
 
   constructor(private assignmentsService: AssignmentsService,
               private router:Router, private _formBuilder: FormBuilder, 
-              private snackBar: MatSnackBar, private http: HttpClient) { }
+              private snackBar: MatSnackBar, private http: HttpClient,
+              public dialogRef: MatDialogRef<AddAssignmentComponent>,
+   @Inject(MAT_DIALOG_DATA) public data: Assignment,
+   private dialogService: DialogService) { }
+
+   ngOnInit(): void {
+    this.dialogService.dialogClose$.subscribe(() => {
+     this.dialogRef.close();
+   });
+  }
 
   onSubmit(event: any) {
     // On vérifie que les champs ne sont pas vides
@@ -44,19 +56,20 @@ export class AddAssignmentComponent {
         // On va naviguer vers la page d'accueil pour afficher la liste
         // des assignments
         this.router.navigate(["/home"]);
-        this.snackBar.open('Assignment added successfully!', 'Close', {
+        this.snackBar.open(`The ${nouvelAssignment.nom} assignment added successfully!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
-          panelClass: ['success-snackbar']
+          panelClass: ['mat-toolbar', 'mat-success']
         });
 
       }, (error) =>{
-        this.snackBar.open('Error occurred when adding assignment!', 'Close', {
+        this.snackBar.open(`Error occurred when adding the ${nouvelAssignment.nom} assignment!`, 'Close', {
           duration: 7000,
           verticalPosition: 'bottom',
-          panelClass: ['error-snackbar']
+          panelClass: ['mat-toolbar', 'mat-warn']
         });
       });
+      this.dialogService.closeDialog();
   }
 
   firstFormGroup = this._formBuilder.group({

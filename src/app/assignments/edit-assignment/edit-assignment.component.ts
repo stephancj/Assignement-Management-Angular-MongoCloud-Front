@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { DialogService } from 'src/app/shared/dialog.service';
 import { Assignment } from '../assignment.model';
+
 
 @Component({
  selector: 'app-edit-assignment',
@@ -17,26 +21,26 @@ export class EditAssignmentComponent implements OnInit {
  constructor(
    private assignmentsService: AssignmentsService,
    private route: ActivatedRoute,
-   private router: Router
- ) {}
+   private router: Router,
+   public dialogRef: MatDialogRef<EditAssignmentComponent>,
+   @Inject(MAT_DIALOG_DATA) public data: Assignment,
+   private dialogService: DialogService,
+   private snackBar: MatSnackBar
+ ) {
+  console.log('Data received:', data);
+ }
 
  ngOnInit(): void {
    this.getAssignment();
+   this.dialogService.dialogClose$.subscribe(() => {
+    this.dialogRef.close();
+  });
  }
  getAssignment() {
   // on récupère l'id dans le snapshot passé par le routeur
   // le "+" force l'id de type string en "number"
-  const id = +this.route.snapshot.params['id'];
-
-  // Exemple de récupération des query params (après le ? dans l'url)
-  const queryParams = this.route.snapshot.queryParams;
-  console.log(queryParams);
-  console.log("nom :"  + queryParams['nom'])
-  console.log("matière :" + queryParams['matiere'])
- 
-  // Exemple de récupération du fragment (après le # dans l'url)
-  const fragment = this.route.snapshot.fragment;
-  console.log("Fragment = " + fragment);
+  // const id = +this.route.snapshot.params['id'];
+  const id = this.data.id;
 
   this.assignmentsService.getAssignment(id)
   .subscribe((assignment) => {
@@ -57,9 +61,19 @@ onSaveAssignment() {
     .updateAssignment(this.assignment)
     .subscribe((message) => {
       console.log(message);
-
-      // navigation vers la home page
-      this.router.navigate(['/home']);
+      this.snackBar.open(`The ${this.assignment!.nom} assignment is successfully edited!`, 'Close', {
+        duration: 7000,
+        verticalPosition: 'bottom',
+        panelClass : ['mat-toolbar', 'mat-success']
+      });
+    }, (error) => {
+      console.log(error);
+      this.snackBar.open(`The ${this.assignment!.nom} assignment is not edited!`, 'Close', {
+        duration: 7000,
+        verticalPosition: 'bottom',
+        panelClass : ['mat-toolbar', 'mat-warn']
+      });
     });
-}
+  this.dialogService.closeDialog();
+  }
 }

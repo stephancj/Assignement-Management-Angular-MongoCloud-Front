@@ -46,6 +46,33 @@
 
   .assignment-card {
     cursor: move;
+    cursor: grab;
+  }
+
+  .add-new-card{
+    cursor: pointer;
+    height: 200px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.75;
+  }
+
+  .card{
+    height: 225px;
+    width: 275px;
+  }
+
+
+  .add-new-card:hover{
+    opacity: 1;
+    height: 225px;
+    width: 275px;
+  }
+
+  .assignment-card:active {
+      cursor: grabbing;
   }
 
   .drag-and-drop-container{
@@ -75,4 +102,11 @@
     font-weight: bold;
   }
 
+  .mat-mdc-snack-bar-container {
+    &.blue-snackbar {
+      --mdc-snackbar-container-color: #2196f3;
+      --mat-mdc-snack-bar-button-color: #fff;
+      --mdc-snackbar-supporting-text-color: #fff;
+    }
+  }
   

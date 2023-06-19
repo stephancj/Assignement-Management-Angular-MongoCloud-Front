@@ -54,7 +54,7 @@ import { TeachersComponent } from './teachers/teachers.component';
     StudentsComponent,
     TeachersComponent,
     SubjectsComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     AppRoutingModule,
