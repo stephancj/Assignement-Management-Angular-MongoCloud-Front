@@ -1,8 +1,10 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
-import { Assignment } from './assignment.model';
-import { AssignmentsService } from '../shared/assignments.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
+import { Component, EventEmitter, NgZone, OnInit, Output, ViewChild } from '@angular/core';
+import { filter, map, pairwise, tap } from 'rxjs';
+import { AssignmentsService } from '../shared/assignments.service';
+import { Assignment } from './assignment.model';
+
 
 @Component({
   selector: 'app-assignments',
@@ -10,9 +12,14 @@ import { filter, map, pairwise, tap, throttleTime } from 'rxjs';
   styleUrls: ['./assignments.component.css']
 })
 export class AssignmentsComponent implements OnInit {
+
+  @Output() addClicked = new EventEmitter<string>();
+
   titre="Liste des devoirs à rendre";
   // les données à afficher
   assignments:Assignment[] = [];
+  submittedAssignments:Assignment[] = [];
+  notSubmittedAssignments:Assignment[] = [];
   // Pour la data table
   displayedColumns: string[] = ['id', 'nom', 'dateDeRendu', 'rendu'];
 
@@ -31,6 +38,10 @@ export class AssignmentsComponent implements OnInit {
 
   constructor(private assignmentsService:AssignmentsService,
               private ngZone: NgZone) {    
+  }
+  
+  onAddClick() {
+    this.addClicked.emit('Add assignment');
   }
   
   ngOnInit(): void {
@@ -97,6 +108,11 @@ export class AssignmentsComponent implements OnInit {
       this.hasNextPage = data.hasNextPage;
       this.nextPage = data.nextPage;
 
+      this.submittedAssignments = this.assignments.filter(a => a.rendu);
+      this.notSubmittedAssignments = this.assignments.filter(a => false === a.rendu);
+
+      console.log(this.submittedAssignments);
+
       console.log("Données reçues");
     });
   }
@@ -147,5 +163,20 @@ export class AssignmentsComponent implements OnInit {
     this.page = event.pageIndex;
     this.limit = event.pageSize;
     this.getAssignments();
+  }
+
+  onDrop(event: CdkDragDrop<Assignment[]>) {
+    console.log(event);
+
+    if(event.previousContainer === event.container) {
+      console.log("dans le même container");
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      console.log("dans un autre container");
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
   }
 }

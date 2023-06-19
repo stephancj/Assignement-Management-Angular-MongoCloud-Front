@@ -4,10 +4,10 @@
         <button mat-icon-button (click)="toggleSideNav()" aria-label="Example icon-button with menu icon">
             <mat-icon>menu</mat-icon>
         </button>
-      <span>My App</span>
+      <span>{{ selectedItem }}</span>
       <span class="example-spacer"></span>
       <!-- logout button with icon-->
-        <button mat-icon-button aria-label="Example icon-button with menu icon">
+        <button mat-icon-button (click)="logout()" aria-label="Example icon-button with menu icon">
             <mat-icon>logout</mat-icon>
         </button>
     </mat-toolbar-row>
@@ -24,7 +24,11 @@
     <mat-sidenav-content>
         <ng-container [ngSwitch]="selectedItem">
             <ng-container *ngSwitchCase="'Assignments'">
-                <app-assignments></app-assignments>
+                <app-assignments (addClicked)="selectItem($event)"></app-assignments>
+            </ng-container>
+            
+            <ng-container *ngSwitchCase="'Add assignment'">
+                <app-add-assignment></app-add-assignment>
             </ng-container>
 
             <ng-container *ngSwitchCase="'Subjects'">

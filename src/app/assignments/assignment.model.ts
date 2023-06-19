@@ -4,5 +4,9 @@ export class Assignment {
     nom!: string;
     dateDeRendu!: Date;
     rendu!: boolean;
+    score!: number;
+    comment!: String;
+    idSubject!: String;
+    idStudent!: String;
 }
 

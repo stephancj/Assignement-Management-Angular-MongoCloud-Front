@@ -3,3 +3,21 @@
     flex-direction: column;
     margin:5px;
 }
+
+.mat-stepper-vertical {
+    margin-top: 8px;
+  }
+  
+  .mat-mdc-form-field {
+    margin-top: 16px;
+  }
+
+  .error-snackbar {
+    background-color: #ff0000; /* Replace with your desired background color */
+    color: #ffffff; /* Replace with your desired text color */
+  }
+
+  .success-snackbar {
+    background-color: #03a87f; /* Replace with your desired background color */
+    color: #ffffff; /* Replace with your desired text color */
+  }

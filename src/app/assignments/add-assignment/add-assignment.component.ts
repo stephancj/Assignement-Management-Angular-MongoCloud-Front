@@ -1,7 +1,12 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Assignment } from '../assignment.model';
-import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AssignmentsService } from 'src/app/shared/assignments.service';
+import { Assignment } from '../assignment.model';
+
+
 
 @Component({
   selector: 'app-add-assignment',
@@ -16,7 +21,8 @@ export class AddAssignmentComponent {
 
 
   constructor(private assignmentsService: AssignmentsService,
-              private router:Router) { }
+              private router:Router, private _formBuilder: FormBuilder, 
+              private snackBar: MatSnackBar, private http: HttpClient) { }
 
   onSubmit(event: any) {
     // On vérifie que les champs ne sont pas vides
@@ -32,13 +38,32 @@ export class AddAssignmentComponent {
 
     // on demande au service d'ajouter l'assignment
     this.assignmentsService.addAssignment(nouvelAssignment)
-      .subscribe(message => {
-        console.log(message);
+      .subscribe(response => {
+        console.log(response);
 
         // On va naviguer vers la page d'accueil pour afficher la liste
         // des assignments
         this.router.navigate(["/home"]);
+        this.snackBar.open('Assignment added successfully!', 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+          panelClass: ['success-snackbar']
+        });
 
+      }, (error) =>{
+        this.snackBar.open('Error occurred when adding assignment!', 'Close', {
+          duration: 7000,
+          verticalPosition: 'bottom',
+          panelClass: ['error-snackbar']
+        });
       });
   }
+
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+  isLinear = false;
 }

@@ -6,22 +6,26 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-
 
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { FormsModule } from '@angular/forms';
@@ -37,34 +41,6 @@ import { LoginComponent } from './login/login.component';
 import { StudentsComponent } from './students/students.component';
 import { SubjectsComponent } from './subjects/subjects.component';
 import { TeachersComponent } from './teachers/teachers.component';
-
-// const routes: Routes = [
-//   {
-//     path: '',
-//     component: AssignmentsComponent
-//   },
-//   {
-//     path: 'home',
-//     component: AssignmentsComponent
-//   },
-//   {
-//     path: 'add',
-//     component: AddAssignmentComponent
-//   },
-//   {
-//     path: 'assignments/:id',
-//     component: AssignmentDetailComponent
-//   },
-//   {
-//     path: 'assignments/:id/edit',
-//     component: EditAssignmentComponent,
-//     canActivate: [authGuard]
-//   },
-//   {
-//     path: 'login',
-//     component: LoginComponent
-//   }
-// ]
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,7 +65,8 @@ import { TeachersComponent } from './teachers/teachers.component';
     MatButtonModule, MatIconModule, MatDividerModule,
     MatInputModule, MatFormFieldModule, MatDatepickerModule,
     MatListModule, MatCardModule, MatCheckboxModule, MatSlideToggleModule,
-    MatTableModule, MatPaginatorModule, MatToolbarModule, MatSidenavModule
+    MatTableModule, MatPaginatorModule, MatToolbarModule, MatSidenavModule, MatStepperModule, ReactiveFormsModule,
+    MatSnackBarModule, DragDropModule, MatGridListModule, MatSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

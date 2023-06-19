@@ -1,28 +1,122 @@
-<h2>{{titre}}</h2>
-
 <main class="container">
-    <nav class="ajouterBtn">
-        <a routerLink="/add">
-            <button mat-flat-button color="accent"> Ajouter Assignment
-            </button>
-        </a>
-    </nav>
+  <nav class="ajouterBtn">
+    <a (click)="onAddClick()">
+      <button mat-flat-button color="accent">
+        <mat-icon>add-icon</mat-icon>
+        Ajouter assignment
+      </button>
+    </a>
+  </nav>
+  <p>
+    Régler nombre par page :
+    <input
+      type="range"
+      min="1"
+      max="{{ totalDocs }}"
+      value="10"
+      [(ngModel)]="limit"
+      (change)="getAssignments()"
+    />
+    {{ limit }}
+  </p>
+  <mat-divider></mat-divider>
+  <div class="drag-and-drop-container">
+    <div class="drag-and-drop-section not-submitted">
+      <h2 class="section-title">Not submitted Assignments</h2>
+      <div
+        cdkDropList
+        #notSubmittedAssignmentsList="cdkDropList"
+        (cdkDropListDropped)="onDrop($event)"
+        [cdkDropListData]="notSubmittedAssignments"
+        [cdkDropListConnectedTo]="[submittedAssignmentsList]"
+        class="assignment-container"
+      >
+        <mat-grid-list cols="2" rowHeight="250">
+          <mat-grid-tile
+            *ngFor="let assignment of notSubmittedAssignments"
+            cdkDrag
+          >
+            <mat-card>
+              <mat-card-header>
+                <img
+                  mat-card-avatar
+                  src="https://material.angular.io/assets/img/examples/shiba1.jpg"
+                  alt="Shiba Inu"
+                />
+                <mat-card-title>{{ assignment.nom }}</mat-card-title>
+                <mat-card-subtitle>{{
+                  assignment.dateDeRendu
+                }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <p>{{ assignment.comment }}</p>
+                <p>Score : {{ assignment.score }}/20</p>
+                <mat-divider></mat-divider>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button>
+                  <mat-icon color="primary">edit-icon</mat-icon>
+                </button>
+                <button mat-button>
+                  <mat-icon color="accent">delete-icon</mat-icon>
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
 
+    <div class="drag-and-drop-section submitted">
+      <h2 class="section-title">Submitted assigment</h2>
+      <div
+        cdkDropList
+        #submittedAssignmentsList="cdkDropList"
+        (cdkDropListDropped)="onDrop($event)"
+        [cdkDropListData]="submittedAssignments"
+        [cdkDropListConnectedTo]="[notSubmittedAssignmentsList]"
+        class="assignment-container"
+      >
+        <mat-grid-list cols="2" rowHeight="250">
+          <mat-grid-tile
+            *ngFor="let assignment of submittedAssignments"
+            cdkDrag
+          >
+          <mat-card>
+            <mat-card-header>
+              <img
+                mat-card-avatar
+                src="https://material.angular.io/assets/img/examples/shiba1.jpg"
+                alt="Shiba Inu"
+              />
+              <mat-card-title>{{ assignment.nom }}</mat-card-title>
+              <mat-card-subtitle>{{
+                assignment.dateDeRendu
+              }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ assignment.comment }}</p>
+              <p>Score : {{ assignment.score }}/20</p>
+              <mat-divider></mat-divider>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-button>
+                <mat-icon color="primary">edit-icon</mat-icon>
+              </button>
+              <button mat-button>
+                <mat-icon color="accent">delete-icon</mat-icon>
+              </button>
+            </mat-card-actions>
+          </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+  </div>
 
- 
-    <mat-divider></mat-divider>
-    <p>
-        Nb assignments total {{totalDocs}}, par page {{limit}}, nbPages {{totalPages}}
-    </p>
-    <p>
-        Régler nb par page : 
-           <input type="range" 
-                  min=1 max=100 value=10 
-                  [(ngModel)]="limit"
-                  (change)="getAssignments()"
-           /> {{limit}}
-    </p>
-<p>
+  <mat-divider></mat-divider>
+  <p>Nombre assignments total {{ totalDocs }}, Affichés: {{ limit }}</p>
+  <!-- <p>
     <button (click)="premierePage()" [disabled]="!hasPrevPage">
         Première page
     </button>
@@ -33,8 +127,8 @@
     <button (click)="dernierePage()" [disabled]="!hasNextPage">
         Derniere page
     </button>
-</p>
-<h1>Affichage avec data table</h1>
+</p> -->
+  <!-- <h1>Affichage avec data table</h1>
 <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                  showFirstLastButtons
                  aria-label="Selection de la page des assigments"
@@ -44,33 +138,33 @@
                  [pageSize]="limit"
                  [pageIndex]="page"
   >
-  </mat-paginator>
-<table mat-table [dataSource]="assignments" class="mat-elevation-z8 demo-table">
-    <!-- id Column -->
-    <ng-container matColumnDef="id">
+  </mat-paginator> -->
+  <!-- <table mat-table [dataSource]="assignments" class="mat-elevation-z8 demo-table"> -->
+  <!-- id Column -->
+  <!-- <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> Id </th>
       <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-  
-    <!-- nom Column -->
-    <ng-container matColumnDef="nom">
+    </ng-container> -->
+
+  <!-- nom Column -->
+  <!-- <ng-container matColumnDef="nom">
       <th mat-header-cell *matHeaderCellDef> Nom </th>
       <td mat-cell *matCellDef="let element"> {{element.nom}} </td>
-    </ng-container>
-  
-    <!-- dateDeRendu Column -->
-    <ng-container matColumnDef="dateDeRendu">
+    </ng-container> -->
+
+  <!-- dateDeRendu Column -->
+  <!-- <ng-container matColumnDef="dateDeRendu">
       <th mat-header-cell *matHeaderCellDef> Date de rendu </th>
       <td mat-cell *matCellDef="let element"> {{element.dateDeRendu}} </td>
-    </ng-container>
-  
-    <!-- rendu Column -->
-    <ng-container matColumnDef="rendu">
+    </ng-container> -->
+
+  <!-- rendu Column -->
+  <!-- <ng-container matColumnDef="rendu">
       <th mat-header-cell *matHeaderCellDef> Rendu </th>
       <td mat-cell *matCellDef="let element"> {{element.rendu}} </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    </ng-container> -->
+
+  <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
@@ -82,10 +176,9 @@
                  [pageSize]="limit"
                  [pageIndex]="page"
   >
-  </mat-paginator>
+  </mat-paginator> -->
 
-  
-<h1>Affichage avec mat-list / mat-list-item</h1>
+  <!-- <h1>Affichage avec mat-list / mat-list-item</h1>
     <mat-list *ngFor="let a of assignments">
         <a routerLink="/assignments/{{a.id}}">
             <h3 mat-subheader>Date limite: {{a.dateDeRendu | date: 'dd/MM/yy'}}</h3>
@@ -99,10 +192,9 @@
             </mat-list-item>
             <mat-divider></mat-divider>
         </a>
-    </mat-list>
-    
+    </mat-list> -->
 
-    <h1>Exemple de scrolling virtuel infini</h1>
+  <!-- <h1>Exemple de scrolling virtuel infini</h1>
     <cdk-virtual-scroll-viewport itemSize="50" class="example-viewport" #scroller>
     <mat-list *cdkVirtualFor="let a of assignments">
         <a routerLink="/assignments/{{a.id}}">
@@ -118,6 +210,5 @@
             <mat-divider></mat-divider>
         </a>
     </mat-list>
-</cdk-virtual-scroll-viewport>
-
+</cdk-virtual-scroll-viewport> -->
 </main>

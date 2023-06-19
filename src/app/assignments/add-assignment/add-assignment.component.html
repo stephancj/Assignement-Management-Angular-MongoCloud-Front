@@ -1,4 +1,4 @@
-<form ngForm #assignmentForm (submit)="onSubmit($event); assignmentForm.reset()" class="form">
+<!-- <form ngForm #assignmentForm (submit)="onSubmit($event); assignmentForm.reset()" class="form">
 
     <mat-form-field>
         <input matInput [(ngModel)]="nomDevoir" name="nom" placeholder="Nom du devoir" required>
@@ -15,4 +15,47 @@
     <button mat-stroked-button color="primary">
         Ajouter un devoir
     </button>
+</form> -->
+
+<form ngForm #assignmentForm (submit)="onSubmit($event); assignmentForm.reset()" class="form">
+  <mat-stepper orientation="vertical" [linear]="isLinear" #stepper>
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" class="form">
+        <ng-template matStepLabel>Fill out the assignment name</ng-template>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput [(ngModel)]="nomDevoir" placeholder="What is the assignment name" formControlName="firstCtrl" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next step</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out the due date</ng-template>
+        <mat-form-field appearance="fill" class="form">
+            <mat-label>Date de rendu</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="dateDeRendu" name="date" formControlName="secondCtrl" required>
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+  <button mat-stroked-button color="primary">Ajouter un devoir</button>
 </form>
+  

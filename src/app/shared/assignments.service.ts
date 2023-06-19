@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, forkJoin, map, of, tap } from 'rxjs';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Assignment } from '../assignments/assignment.model';
-import { bdInitialAssignments } from './data';
 import { LoggingService } from './logging.service';
 
 @Injectable({
@@ -109,39 +108,4 @@ assignments:Assignment[] = []
     return of('Assignment supprimé avec succès')
     */
   }
-
-  peuplerBD() {
-    bdInitialAssignments.forEach(a => {
-      const newAssignment = new Assignment();
-      newAssignment.id = a.id;
-      newAssignment.nom = a.nom;
-      newAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      newAssignment.rendu = a.rendu;
-
-      this.addAssignment(newAssignment)
-      .subscribe((reponse) => {
-        console.log(reponse.message);
-      })
-    })
-  }
-
-  // cette version retourne un Observable. Elle permet de savoir quand
-  // l'opération est terminée (l'ajout des 1000 assignments)
-  peuplerBDavecForkJoin():Observable<any> {
-    // tableau d'observables (les valeurs de retour de addAssignment)
-    let appelsVersAddAssignment:Observable<any>[] = [];
- 
-    bdInitialAssignments.forEach(a => {
-      const nouvelAssignment = new Assignment();
-      nouvelAssignment.id = a.id;
-      nouvelAssignment.nom = a.nom;
-      nouvelAssignment.dateDeRendu = new Date(a.dateDeRendu);
-      nouvelAssignment.rendu = a.rendu;
- 
-      appelsVersAddAssignment.push(this.addAssignment(nouvelAssignment))
-    });
- 
-    return forkJoin(appelsVersAddAssignment);
-  }
- 
 }

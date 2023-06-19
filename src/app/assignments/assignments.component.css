@@ -5,6 +5,7 @@
 
 .ajouterBtn {
     align-self: flex-end;
+    margin: 20px
 }
 
 .example-viewport {
@@ -42,4 +43,36 @@
     text-align: center;
     font-weight: bold;
   }
+
+  .assignment-card {
+    cursor: move;
+  }
+
+  .drag-and-drop-container{
+    display: flex;
+    justify-content: center;
+  }
+
+  .drag-and-drop-section{
+    flex-grow: 1;
+    padding-right: 30px;
+    padding-left: 30px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+
+  .submitted{
+    background-color: #b3d5cd;
+  }
+
+  .not-submitted{
+    background-color: #efc3c3;
+  }
+
+  .section-title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+  }
+
   

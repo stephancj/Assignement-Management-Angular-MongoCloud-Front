@@ -20,7 +20,6 @@ export class AuthService {
 
   logOut() {
     console.log("ON SE DELOGGE")
-
     this.loggedIn = false;
   }
 
