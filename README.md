@@ -16,9 +16,9 @@ The goal of this project is to implement the following optional improvements to 
 ## Implement Login/Password Management:
 
 ### Simple Case: 
-Hardcode a valid login/password combinations directly in the authentication service.
-Username: admin
-Password: admin
+Hardcode a valid login/password combinations directly in the authentication service. <br>
+Username: admin <br>
+Password: admin <br>
 
 ## Enhance Assignment Model:
 
