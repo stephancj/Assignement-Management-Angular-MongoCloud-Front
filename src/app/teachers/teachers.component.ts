@@ -73,7 +73,7 @@ export class TeachersComponent {
       this.hasNextPage = data.hasNextPage;
       this.nextPage = data.nextPage;
 
-      console.log("Teachers reçus");
+      console.log("Teachers reçus :", this.totalDocs);
     });
   }
 }

@@ -12,8 +12,8 @@ assignments:Teacher[] = []
   constructor(private loggingService:LoggingService,
     private http:HttpClient) { }
 
-    uri_api = 'http://localhost:8010/api/teachers';
-    // uri_api = 'https://mbds-madagascar-2022-2023-back-end.onrender.com/api/assignments';
+    // uri_api = 'http://localhost:8010/api/teachers';
+    uri_api = 'https://nomena58-stephan11-assigment-ws.onrender.com/api/teachers';
 
   getTeachers(page:number, limit:number):Observable<any> {
     return this.http.get<Teacher[]>(this.uri_api + "?page=" + page + "&limit=" + limit);

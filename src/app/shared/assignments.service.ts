@@ -13,8 +13,8 @@ assignments:Assignment[] = []
   constructor(private loggingService:LoggingService,
     private http:HttpClient) { }
 
-    uri_api = 'http://localhost:8010/api/assignments';
-    // uri_api = 'https://mbds-madagascar-2022-2023-back-end.onrender.com/api/assignments';
+    // uri_api = 'http://localhost:8010/api/assignments';
+    uri_api = 'https://nomena58-stephan11-assigment-ws.onrender.com/api/assignments';
 
   getAssignments(page:number, limit:number):Observable<any> {
     // normalement on doit envoyer une requête HTTP
