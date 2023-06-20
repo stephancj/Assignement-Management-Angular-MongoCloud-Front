@@ -1,27 +1,72 @@
-# AssignmentApp
+#README
+This repository contains a project that aims to enhance an existing application by adding new features and improving the user experience.
+##Contributors
+CHRISTIAN STEPHAN JOSUE - 11
+RAZAKAMALALA NOMENA FITIAVANA - 58
+###Backend
+The backend was made by Nomena
+###Frontend
+The frontend was made by Stephan
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+#Project Description
+The goal of this project is to implement the following optional improvements to the existing application:
 
-## Development server
+##Add Toolbar and SideBar/Sidenav: Introduce a Toolbar and a SideBar/Sidenav to enhance the presentation and navigation of the application.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+##Implement Login/Password Management:
 
-## Code scaffolding
+###Simple Case: 
+Hardcode a valid login/password combinations directly in the authentication service.
+Username: admin
+Password: admin
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+##Enhance Assignment Model:
 
-## Build
+Added new properties to the Assignment model, including:
+Author (student's name or photo)
+Subject (e.g., Databases, Web Technologies, Grails, etc.)
+Associate an image with each subject and include a photo of the instructor.
+Included a "Grade out of 20" property. An Assignment cannot be marked as "submitted" unless it has been graded.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+##Improvements to Assignment Display:
+###Update various sections of the application where Assignments are displayed, edited, or entered.
+Displayed each Assignment in the list as a Material Card, showing the title, date, student number, a small image representing the assignment.
+In the edit dialog, included additional information such as remarks(comments) and the grade.
 
-## Running unit tests
+###Separated Assignments into two sections:
+Differentiate between submitted and unsubmitted Assignments by displaying them in separate sections.
+Implemented drag-and-drop functionality to move an Assignment from one section to another. By dragging an unsubmitted Assignment card to the "Submitted" section changes the Assignment's status to "Submitted."
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+###Use Stepper Form for Assignment Creation:
+Implement a multi-step form (Stepper) for adding Assignments.
 
-## Running end-to-end tests
+###Improving the UI:
+Made the application visually appealing by incorporating individual design elements, ensuring that each enhancement is unique in appearance.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
+#How to run the project locally?
+###Clone the backend and frontend projects.(In one directory for best practice)
+backend repository: https://github.com/NomenaRazakamalala/Assignement-Management-Angular-MongoCloud-Back
+frontend repository: https://github.com/stephancj/Assignement-Management-Angular-MongoCloud-Front.git
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+###Change the API URL in frontend project's different service files
+Comment the actual api_uri valiable in these service file and uncomment the local uri
+
+###Install dependencies for each project
+Run the command: "npm install" for the backend and frontend
+
+###Run the servers
+Frontend: ng serve
+Backend: npm run start
+
+###open and test 
+Backend: open localhost:8010/api/assignments to test if the backend is running well
+Frontend: open localhost:4200 and see if the frontend is displayed
+##Login
+To login, use "admin" username and "admin" password
+
+
+#Hosting
+The application is hosted in render.com with at these following link:
+Backend: https://nomena58-stephan11-assigment-ws.onrender.com/
+Frontend: https://nomena58-stephan11-assigment-front.onrender.com/
